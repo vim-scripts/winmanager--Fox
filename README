@@ -1,0 +1,9 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=1440
+
+This plugin is a minor bug-fix version of vimscript #95.
+
+I sent the patches to the author of winmanager last September but I've received no reply till now.  I assume that he doesn't maintain this script any more.  So I decide to upload my patched version as a new entry.
+
+One new feature of this plugin is called "start".  When you are browsing files with winfileexplorer, just place your cursor onto a file and press "S" (shift-s), Vim will open the file with the application associated with the file type. So you are able to launch a media player to enjoy the music without opening an extra konqueror or nautilus.
+
+Another new feature of this plugin is "toggle show hidden files/directories".  By default, this plugin doesn't show files/directories prefixed with dot ".".  You can toggle show/hide hidden files/directories by pressing "x" in the file explorer window.  You can override this default setting by putting "let g:explShowHiddenFiles = 1" in your "~/.vimrc" to make it show hidden files/directories by default.
