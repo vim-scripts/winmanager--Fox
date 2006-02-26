@@ -1,7 +1,7 @@
 "=============================================================================
 "        File: winmanager.vim
 "      Author: Srinath Avadhanula (srinath@eecs.berkeley.edu)
-" Last Change: Wed Jan 20 18:46:55 2003 PST
+" Last Change: 2006-02-26 20:11:19
 "        Help: winmanager.vim is a plugin which implements a classical windows
 "              type IDE in Vim-6.0.  When you open up a new file, simply type
 "              in :WMToggle. This will start up the file explorer.
@@ -505,7 +505,7 @@ function! WinManagerFileEdit(bufName, split)
 			endif
 		end
 		if bufName != ''
-			exe 'silent! e '.bufcall
+			exe 'silent! e '.escape(bufcall, " ")
 		else
 			exe 'silent! buffer '.bufNr
 		endif
