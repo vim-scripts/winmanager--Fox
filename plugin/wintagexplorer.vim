@@ -1,7 +1,7 @@
 "=============================================================================
 "        File: wintagexplorer.vim
 "      Author: Srinath Avadhanula (srinath@eecs.berkeley.edu)
-" Last Change: Wed Apr 03 05:00 PM 2002 PST
+" Last Change: 2006-08-02 13:41:29
 "        Help: This file provides a simple interface to a tags file. The tags
 "              are grouped according to the file they belong to and the user can
 "              press <enter> while on a tag to open the tag in an adjacent
@@ -472,6 +472,7 @@ endfunction
 "    file is manual. There is no error-checking done in this function, so it
 "    needs to be used responsibly.
 function! s:LoadView(foldInfo)
+	setlocal foldmethod=manual
 	let row = s:Strntok(a:foldInfo, '#', 1)
 	let col = s:Strntok(a:foldInfo, '#', 2)
 	let folds = s:Strntok(a:foldInfo, '#', 3)
