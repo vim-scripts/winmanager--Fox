@@ -34,6 +34,16 @@ if !exists("g:winManagerWindowLayout")
 	let g:winManagerWindowLayout = "FileExplorer,TagsExplorer|BufExplorer"
 end
 
+" default window align
+if !exists("g:winManagerOnRightSide")
+	let g:winManagerOnRightSide = 0
+end
+
+" auto open winmanager
+if !exists("g:winManagerAutoOpen")
+	let g:winManagerAutoOpen = 0
+end
+
 " use default explorer plugin which ships with vim.
 if !exists("g:defaultExplorer")
 	let g:defaultExplorer = 1
@@ -101,6 +111,11 @@ let s:commandRunning = 0
 " Line continuation used here
 let s:cpo_save = &cpo
 set cpo&vim
+
+" Automatically open the WinManager
+if g:winManagerAutoOpen
+	autocmd VimEnter * nested call s:StartWindowsManager()|1wincmd w
+endif
 
 "---
 " this function creates a variable 
@@ -272,9 +287,11 @@ function! <SID>StartWindowsManager()
 			let currentWindowNumber = currentWindowNumber + 1
 		end
 		let cen = 1
-		" for now assume that the explorer windows always stay on the left.
-		" TODO: make this optional later
-		wincmd H
+		if g:winManagerOnRightSide
+			wincmd L
+		else
+			wincmd H
+		end
 		" set up the correct width
 		exe g:winManagerWidth.'wincmd |'
 	end
@@ -315,7 +332,11 @@ function! <SID>StartWindowsManager()
 				" if this is the first explorer shown, need to push it to the
 				" right.
 				if nothingShown
-					wincmd H
+					if g:winManagerOnRightSide
+						wincmd L
+					else
+						wincmd H
+					end
 					" set up the correct width
 					exe g:winManagerWidth.'wincmd |'
 				end
@@ -498,7 +519,11 @@ function! WinManagerFileEdit(bufName, split)
 					vsplit
 				end
 				" now push this to the very right
-				wincmd L
+				if g:winManagerOnRightSide
+					wincmd H
+				else
+					wincmd L
+				end
 				" calculate the width of this window and reset it.
 				exe &columns-g:winManagerWidth.' wincmd |'
 				let repairAltReg = 1
@@ -766,7 +791,11 @@ function! <SID>RefreshWinManager(...)
 					exe 'call '.name.'_ReSize()'
 				end
 				if nearestWindow == 'inf'
-					wincmd H
+					if g:winManagerOnRightSide
+						wincmd L
+					else
+						wincmd H
+					end
 					" set up the correct width
 					" set width only if we are creating a new window...
 					exe g:winManagerWidth.'wincmd |'
